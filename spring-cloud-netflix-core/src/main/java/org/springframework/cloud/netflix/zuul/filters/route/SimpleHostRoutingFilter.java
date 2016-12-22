@@ -232,10 +232,7 @@ public class SimpleHostRoutingFilter extends ZuulFilter {
 	}
 
 	protected CloseableHttpClient newClient() {
-		final RequestConfig requestConfig = RequestConfig.custom()
-				.setSocketTimeout(SOCKET_TIMEOUT.get())
-				.setConnectTimeout(CONNECTION_TIMEOUT.get())
-				.setCookieSpec(CookieSpecs.IGNORE_COOKIES).build();
+		final RequestConfig requestConfig = newClientRequestConfig();
 
 		HttpClientBuilder httpClientBuilder = HttpClients.custom();
 		if (!this.sslHostnameValidationEnabled) {
@@ -259,6 +256,14 @@ public class SimpleHostRoutingFilter extends ZuulFilter {
 						return null;
 					}
 				}).build();
+	}
+
+	protected RequestConfig newClientRequestConfig() {
+		return RequestConfig.custom()
+                    .setSocketTimeout(SOCKET_TIMEOUT.get())
+                    .setConnectTimeout(CONNECTION_TIMEOUT.get())
+                    .setCookieSpec(CookieSpecs.IGNORE_COOKIES)
+					.setContentCompressionEnabled(false).build();
 	}
 
 	private HttpResponse forward(HttpClient httpclient, String verb, String uri,

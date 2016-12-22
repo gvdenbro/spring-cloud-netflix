@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpRequest;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.junit.After;
@@ -96,6 +97,14 @@ public class SimpleHostRoutingFilterTests {
 		assertTrue(httpRequest instanceof HttpEntityEnclosingRequest);
 		HttpEntityEnclosingRequest httpEntityEnclosingRequest = (HttpEntityEnclosingRequest) httpRequest;
 		assertTrue(httpEntityEnclosingRequest.getEntity() != null);
+	}
+
+	@Test
+	public void validateContentCompressionIsDisabled() {
+		setupContext();
+		RequestConfig requestConfig = getFilter().newClientRequestConfig();
+
+		assertFalse(requestConfig.isContentCompressionEnabled());
 	}
 
 	private void setupContext() {
