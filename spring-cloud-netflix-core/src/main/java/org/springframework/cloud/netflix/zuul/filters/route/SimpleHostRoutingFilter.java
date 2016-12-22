@@ -260,10 +260,10 @@ public class SimpleHostRoutingFilter extends ZuulFilter {
 
 	protected RequestConfig newClientRequestConfig() {
 		return RequestConfig.custom()
-                    .setSocketTimeout(SOCKET_TIMEOUT.get())
-                    .setConnectTimeout(CONNECTION_TIMEOUT.get())
-                    .setCookieSpec(CookieSpecs.IGNORE_COOKIES)
-					.setContentCompressionEnabled(false).build();
+				.setSocketTimeout(SOCKET_TIMEOUT.get())
+				.setConnectTimeout(CONNECTION_TIMEOUT.get())
+				.setCookieSpec(CookieSpecs.IGNORE_COOKIES)
+				.setContentCompressionEnabled(false).build();
 	}
 
 	private HttpResponse forward(HttpClient httpclient, String verb, String uri,
